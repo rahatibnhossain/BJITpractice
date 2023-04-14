@@ -1,11 +1,13 @@
-package co.bjit.task;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class StudentManagement {
+public class Main {
     Scanner sc = new Scanner(System.in);
+    
+    static int AllID;
+    
     static List<Person> StudentTeacherList = new ArrayList<>();
     static List<Teacher> TeacherList = new ArrayList<>();
     static List<Student> StudentList = new ArrayList<>();
@@ -16,14 +18,19 @@ public class StudentManagement {
 
 
 
-        StudentTeacherList.add(new Teacher(1, "Nira Khan", 31, "Math"));
-        TeacherList.add(new Teacher(1, "Nira Khan", 31, "Math"));
-        StudentTeacherList.add(new Student(2, "Hira Khan", 16, 10));
-        StudentList.add(new Student(2, "Hira Khan", 16, 10));
-        StudentTeacherList.add(new Staff(3, "Hima Khan", 18, "Pion"));
-        StaffList.add(new Staff(3, "Hima Khan", 18, "Pion"));
+        StudentTeacherList.add(new Teacher( "Nira Khan", 31, "Math"));
+        Main.AllID--;
+        TeacherList.add(new Teacher( "Nira Khan", 31, "Math"));
+        StudentTeacherList.add(new Student( "Hira Khan", 16, 10));
+                Main.AllID--;
 
-        StudentManagement sm = new StudentManagement();
+        StudentList.add(new Student( "Hira Khan", 16, 10));
+        StudentTeacherList.add(new Staff( "Hima Khan", 18, "Pion"));
+                Main.AllID--;
+
+        StaffList.add(new Staff( "Hima Khan", 18, "Pion"));
+
+        Main sm = new Main();
         sm.start();
 
     }
@@ -201,9 +208,6 @@ public class StudentManagement {
         System.out.println("Enter the details of the Staff");
         System.out.print("Enter Name : ");
         String name = sc.nextLine();
-        System.out.print("Enter ID : ");
-        int id = sc.nextInt();
-        sc.nextLine();
         System.out.print("Enter Age : ");
         int age = sc.nextInt();
         sc.nextLine();
@@ -211,7 +215,7 @@ public class StudentManagement {
         String post = sc.nextLine();
 
 
-        StudentTeacherList.add(new Staff(id, name, age, post));
+        StudentTeacherList.add(new Staff( name, age, post));
 
         System.out.println();
         showMembers();
@@ -219,7 +223,8 @@ public class StudentManagement {
 
 
     public void showMembers() {
-        System.out.println();
+        System.out.println(" ");
+        System.out.println(" ");
         System.out.println("List of all members");
         for (Person p : StudentTeacherList) {
             p.showDetails();
@@ -234,9 +239,6 @@ public class StudentManagement {
         System.out.println("Enter the details of the Student");
         System.out.print("Enter Name : ");
         String name = sc.nextLine();
-        System.out.print("Enter ID : ");
-        int id = sc.nextInt();
-        sc.nextLine();
         System.out.print("Enter Age : ");
         int age = sc.nextInt();
         sc.nextLine();
@@ -244,7 +246,7 @@ public class StudentManagement {
         int classNumber = sc.nextInt();
         sc.nextLine();
 
-        StudentTeacherList.add(new Student(id, name, age, classNumber));
+        StudentTeacherList.add(new Student(name, age, classNumber));
 
         System.out.println();
         showMembers();
@@ -255,9 +257,7 @@ public class StudentManagement {
         System.out.println("Enter the details of the teacher");
         System.out.print("Enter Name : ");
         String name = sc.nextLine();
-        System.out.print("Enter ID : ");
-        int id = sc.nextInt();
-        sc.nextLine();
+
         System.out.print("Enter Age : ");
         int age = sc.nextInt();
         sc.nextLine();
@@ -265,10 +265,10 @@ public class StudentManagement {
         String subject = sc.nextLine();
 
 
-        StudentTeacherList.add(new Teacher(id, name, age, subject));
-        System.out.println("Hi " + name + ". Your ID is " + id);
+        StudentTeacherList.add(new Teacher( name, age, subject));
+       
 
-        System.out.println();
+        System.out.println(" ");
         showMembers();
     }
 
@@ -309,7 +309,15 @@ class Person implements Experience {
 
 
     public void showDetails() {
-        System.out.println("ID :" + this.id + " Name : " + this.name + " Age :" + this.age + " Type : " + this.type);
+        String space;
+        if(this.name.length() <7 ){
+            space="\t";
+        }
+        else{
+            space =" ";
+        }
+        System.out.printf("ID :"+ this.id + "\t Name : " + this.name +space+ " \t Age :" + this.age + "\t Type : " + this.type +"\n");
+        
 
     }
 
@@ -341,8 +349,8 @@ class Student extends Person implements Experience {
     }
 
 
-    public Student(int id, String name, int age, int classNumber) {
-        super(id, name, age);
+    public Student( String name, int age, int classNumber) {
+        super(++Main.AllID, name, age);
         this.classNumber = classNumber;
         this.type = "Student";
     }
@@ -370,8 +378,8 @@ class Teacher extends Person implements salaryFunctions {
         System.out.println();
     }
 
-    public Teacher(int id, String name, int age, String subject) {
-        super(id, name, age);
+    public Teacher(String name, int age, String subject) {
+        super(++Main.AllID, name, age);
         this.subject = subject;
         this.type = "Teacher";
 
@@ -401,8 +409,8 @@ class Staff extends Person implements salaryFunctions {
 
     }
 
-    public Staff(int id, String name, int age, String post) {
-        super(id, name, age);
+    public Staff(String name, int age, String post) {
+        super(++Main.AllID, name, age);
         this.post = post;
         this.type = "Staff";
 
